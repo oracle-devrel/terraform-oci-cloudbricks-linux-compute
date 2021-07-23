@@ -21,7 +21,10 @@ In this case, you can take advantage of the decoupled nature of the network comp
 
 ## Sample tfvar file
 
+If Flex Shape is in use
+
 ```shell
+########## FLEX SHAPE IN USE ##########
 ########## SAMPLE TFVAR FILE ##########
 ########## PROVIDER SPECIFIC VARIABLES ##########
 region           = "foo-region-1"
@@ -56,10 +59,49 @@ is_flex_shape                           = true
 instance_shape_config_ocpus             = 1
 instance_shape_config_memory_in_gbs     = 16
 ########## ARTIFACT SPECIFIC VARIABLES ##########
-
-
 ########## SAMPLE TFVAR FILE ##########
+########## FLEX SHAPE IN USE ##########
 ```
+
+If flex shape is not in use
+
+```shell
+########## FLEX SHAPE NOT IN USE ##########
+########## SAMPLE TFVAR FILE ##########
+########## PROVIDER SPECIFIC VARIABLES ##########
+region           = "foo-region-1"
+tenancy_ocid     = "ocid1.tenancy.oc1..abcdefg"
+user_ocid        = "ocid1.user.oc1..aaaaaaabcdefg"
+fingerprint      = "fo:oo:ba:ar:ba:ar"
+private_key_path = "/absolute/path/to/api/key/your_api_key.pem"
+########## PROVIDER SPECIFIC VARIABLES ##########
+
+
+########## ARTIFACT SPECIFIC VARIABLES ##########****
+ssh_public_key                   = "./relative/path/to/ssh/key/public_ssh_key.pub"
+ssh_private_key                  = "./relative/path/to/ssh/key/private_ssh_key"
+ssh_public_is_path               = true
+ssh_private_is_path              = true
+compute_availability_domain_list = ["aBCD:foo-REGION-1-AD-1", "aBCD:foo-REGION-1-AD-2","aBCD:foo-REGION-1-AD-3" ]
+
+network_subnet_name                     = "My_Subnet"
+assign_public_ip_flag                   = true
+fault_domain_name                       = ["FAULT-DOMAIN-1", "FAULT-DOMAIN-2", "FAULT-DOMAIN-3"]
+bkp_policy_boot_volume                  = "gold"
+linux_compute_instance_compartment_name = "MY_INSTANCE_COMPARTMENT"
+linux_compute_network_compartment_name  = "MY_NETWORK_COMPARTMENT"
+vcn_display_name                        = "MY_VCN"
+num_instances                           = 1
+is_nsg_required                         = true
+compute_nsg_name                        = "My_NSG"
+compute_display_name_base               = "lnxmachine"
+instance_image_ocid                     = "ocid1.image.oc1.sa-santiago-1.aaaaaaaa4wkfbnujci2u7tfm2eqhliuunxy2hwesmf5kwsclpamf4xgqs2wa" #Image: Oracle-Autonomous-Linux-7.9-2021.04-0
+instance_shape                          = "VM.Standard2.1"
+########## ARTIFACT SPECIFIC VARIABLES ##########
+########## SAMPLE TFVAR FILE ##########
+########## FLEX SHAPE NOT IN USE ##########
+```
+
 
 ### Variable specific considerations
 
