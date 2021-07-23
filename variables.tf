@@ -29,6 +29,7 @@ variable "private_key_path" {
 
 /********** Provider Variables NOT OVERLOADABLE **********/
 
+/********** Brick Variables **********/
 
 /********** Compute SSH Key Variables **********/
 variable "ssh_public_is_path" {
@@ -52,8 +53,6 @@ variable "ssh_private_key" {
 
 }
 /********** Compute SSH Key Variables **********/
-
-/********** Brick Variables **********/
 
 /********** Compute Variables **********/
 variable "num_instances" {

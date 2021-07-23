@@ -3,7 +3,8 @@
 # compute.tf
 #
 # Purpose: The following script defines the creation of compute instances based on an image available within the region
-# Registry entry can be found on the following link: https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance
+# Registry: https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance
+#           https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment 
 
 
 

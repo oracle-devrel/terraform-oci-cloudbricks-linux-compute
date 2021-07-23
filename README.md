@@ -9,7 +9,7 @@ The following cloud brick enables you to create batches of linux computes, start
 ## Reference Architecture
 The following is the reference architecture associated to this brick
 
-![Reference Architecture](./images/linux_compute_brick.png)
+![Reference Architecture](./images/Bricks_Architectures-linux_compute_brick.png)
 
 In this case, you can take advantage of the decoupled nature of the network compartment and the artifact compartment for cost tracking purposes. 
 
@@ -21,7 +21,52 @@ In this case, you can take advantage of the decoupled nature of the network comp
 
 ## Sample tfvar file
 
+If Flex Shape is in use
+
 ```shell
+########## FLEX SHAPE IN USE ##########
+########## SAMPLE TFVAR FILE ##########
+########## PROVIDER SPECIFIC VARIABLES ##########
+region           = "foo-region-1"
+tenancy_ocid     = "ocid1.tenancy.oc1..abcdefg"
+user_ocid        = "ocid1.user.oc1..aaaaaaabcdefg"
+fingerprint      = "fo:oo:ba:ar:ba:ar"
+private_key_path = "/absolute/path/to/api/key/your_api_key.pem"
+########## PROVIDER SPECIFIC VARIABLES ##########
+
+
+########## ARTIFACT SPECIFIC VARIABLES ##########****
+ssh_public_key                   = "./relative/path/to/ssh/key/public_ssh_key.pub"
+ssh_private_key                  = "./relative/path/to/ssh/key/private_ssh_key"
+ssh_public_is_path               = true
+ssh_private_is_path              = true
+compute_availability_domain_list = ["aBCD:foo-REGION-1-AD-1", "aBCD:foo-REGION-1-AD-2","aBCD:foo-REGION-1-AD-3" ]
+
+network_subnet_name                     = "My_Subnet"
+assign_public_ip_flag                   = true
+fault_domain_name                       = ["FAULT-DOMAIN-1", "FAULT-DOMAIN-2", "FAULT-DOMAIN-3"]
+bkp_policy_boot_volume                  = "gold"
+linux_compute_instance_compartment_name = "MY_ARTIFACT_COMPARTMENT"
+linux_compute_network_compartment_name  = "MY_NETWORK_COMPARTMENT"
+vcn_display_name                        = "MY_VCN"
+num_instances                           = 1
+is_nsg_required                         = true
+compute_nsg_name                        = "My_NSG"
+compute_display_name_base               = "lnxmachine"
+instance_image_ocid                     = "ocid1.image.oc1.sa-santiago-1.aaaaaaaa4wkfbnujci2u7tfm2eqhliuunxy2hwesmf5kwsclpamf4xgqs2wa" #Image: Oracle-Autonomous-Linux-7.9-2021.04-0
+instance_shape                          = "VM.Standard.E4.Flex"
+is_flex_shape                           = true
+instance_shape_config_ocpus             = 1
+instance_shape_config_memory_in_gbs     = 16
+########## ARTIFACT SPECIFIC VARIABLES ##########
+########## SAMPLE TFVAR FILE ##########
+########## FLEX SHAPE IN USE ##########
+```
+
+If flex shape is not in use
+
+```shell
+########## FLEX SHAPE NOT IN USE ##########
 ########## SAMPLE TFVAR FILE ##########
 ########## PROVIDER SPECIFIC VARIABLES ##########
 region           = "foo-region-1"
@@ -51,15 +96,12 @@ is_nsg_required                         = true
 compute_nsg_name                        = "My_NSG"
 compute_display_name_base               = "lnxmachine"
 instance_image_ocid                     = "ocid1.image.oc1.sa-santiago-1.aaaaaaaa4wkfbnujci2u7tfm2eqhliuunxy2hwesmf5kwsclpamf4xgqs2wa" #Image: Oracle-Autonomous-Linux-7.9-2021.04-0
-instance_shape                          = "VM.Standard.E4.Flex"
-is_flex_shape                           = true
-instance_shape_config_ocpus             = 1
-instance_shape_config_memory_in_gbs     = 16
+instance_shape                          = "VM.Standard2.1"
 ########## ARTIFACT SPECIFIC VARIABLES ##########
-
-
 ########## SAMPLE TFVAR FILE ##########
+########## FLEX SHAPE NOT IN USE ##########
 ```
+
 
 ### Variable specific considerations
 
@@ -74,6 +116,34 @@ instance_shape_config_memory_in_gbs     = 16
   - If instance_shape is not flex, variable `is_flex_shape` should be set to `false` and then drop the usage of `instance_shape_config_ocpu` and `instance_shape_config_memory_in_gbs` variables by drop/delete or passing out `""` as argument
 
 ---
+## Sample provider
+The following is the base provider definition to be used with this module
+
+```shell
+terraform {
+  required_version = ">= 0.13.5"
+}
+provider "oci" {
+  region       = var.region
+  tenancy_ocid = var.tenancy_ocid
+  user_ocid        = var.user_ocid
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+  disable_auto_retries = "true"
+}
+
+provider "oci" {
+  alias        = "home"
+  region       = data.oci_identity_region_subscriptions.home_region_subscriptions.region_subscriptions[0].region_name
+  tenancy_ocid = var.tenancy_ocid  
+  user_ocid        = var.user_ocid
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+  disable_auto_retries = "true"
+}
+```
+---
+
 
 ## Variable documentation
 ## Requirements
