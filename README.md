@@ -9,7 +9,7 @@ The following cloud brick enables you to create batches of linux computes, start
 ## Reference Architecture
 The following is the reference architecture associated to this brick
 
-![Reference Architecture](./images/linux_compute_brick.png)
+![Reference Architecture](./images/Bricks_Architectures-linux_compute_brick.png)
 
 In this case, you can take advantage of the decoupled nature of the network compartment and the artifact compartment for cost tracking purposes. 
 
@@ -46,7 +46,7 @@ network_subnet_name                     = "My_Subnet"
 assign_public_ip_flag                   = true
 fault_domain_name                       = ["FAULT-DOMAIN-1", "FAULT-DOMAIN-2", "FAULT-DOMAIN-3"]
 bkp_policy_boot_volume                  = "gold"
-linux_compute_instance_compartment_name = "MY_INSTANCE_COMPARTMENT"
+linux_compute_instance_compartment_name = "MY_ARTIFACT_COMPARTMENT"
 linux_compute_network_compartment_name  = "MY_NETWORK_COMPARTMENT"
 vcn_display_name                        = "MY_VCN"
 num_instances                           = 1
