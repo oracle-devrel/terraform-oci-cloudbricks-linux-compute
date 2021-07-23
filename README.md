@@ -74,6 +74,34 @@ instance_shape_config_memory_in_gbs     = 16
   - If instance_shape is not flex, variable `is_flex_shape` should be set to `false` and then drop the usage of `instance_shape_config_ocpu` and `instance_shape_config_memory_in_gbs` variables by drop/delete or passing out `""` as argument
 
 ---
+## Sample provider
+The following is the base provider definition to be used with this module
+
+```shell
+terraform {
+  required_version = ">= 0.13.5"
+}
+provider "oci" {
+  region       = var.region
+  tenancy_ocid = var.tenancy_ocid
+  user_ocid        = var.user_ocid
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+  disable_auto_retries = "true"
+}
+
+provider "oci" {
+  alias        = "home"
+  region       = data.oci_identity_region_subscriptions.home_region_subscriptions.region_subscriptions[0].region_name
+  tenancy_ocid = var.tenancy_ocid  
+  user_ocid        = var.user_ocid
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+  disable_auto_retries = "true"
+}
+```
+---
+
 
 ## Variable documentation
 ## Requirements
