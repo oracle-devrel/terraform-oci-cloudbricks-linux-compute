@@ -17,6 +17,13 @@ resource "oci_core_instance" "Compute" {
   shape               = var.instance_shape
   fault_domain        = var.fault_domain_name[count.index % length(var.fault_domain_name)]
 
+  agent_config {
+    plugins_config {
+      desired_state = "ENABLED"
+      name = "Bastion"
+    }
+  }
+
   dynamic "create_vnic_details" {
     for_each = var.is_nsg_required ? [1] : []
     content {
